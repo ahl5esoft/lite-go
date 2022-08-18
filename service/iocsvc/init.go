@@ -9,13 +9,14 @@ import (
 	"github.com/ahl5esoft/lite-go/service/logsvc"
 	"github.com/ahl5esoft/lite-go/service/mongosvc"
 	"github.com/ahl5esoft/lite-go/service/pathsvc"
+	"github.com/ahl5esoft/lite-go/service/timesvc"
 	"github.com/ahl5esoft/lite-go/service/yamlsvc"
 )
 
 // 初始化
-func Init[T any](yamlName string, t *T) (err error) {
+func Init[T any](yaml string, t *T) (err error) {
 	ioPath := pathsvc.NewIOPath()
-	configLoader := yamlsvc.NewConfigLoader(ioPath, yamlName)
+	configLoader := yamlsvc.NewConfigLoader(ioPath, yaml)
 	if err = configLoader.Load(t); err != nil {
 		return
 	}
@@ -44,6 +45,10 @@ func Init[T any](yamlName string, t *T) (err error) {
 		)
 	}
 
+	Set(
+		timesvc.NewNowTime(),
+	)
+
 	if cfg.GetRedis().Host != "" {
 		// 	addr := cfg.GetRedis().Host
 		// 	if !strings.Contains(addr, ":") {
@@ -58,6 +63,10 @@ func Init[T any](yamlName string, t *T) (err error) {
 		// 		),
 		// 	)
 	}
+
+	Set(
+		mongosvc.NewStringGenerator(),
+	)
 
 	return
 }

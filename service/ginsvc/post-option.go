@@ -47,13 +47,11 @@ func NewPostOption(
 						cErr = fmt.Errorf("%v", rv)
 					}
 
-					if log != nil {
-						log.AddLabel(
-							"stack",
-							"%s",
-							debug.Stack(),
-						)
-					}
+					log.AddLabel(
+						"stack",
+						"%s",
+						debug.Stack(),
+					)
 				}
 
 				if cErr == nil && err != nil {
@@ -61,15 +59,15 @@ func NewPostOption(
 				}
 
 				if cErr != nil {
-					if cErr, ok := cErr.(contract.IError); ok {
-						resp.Error = cErr.GetCode()
-						if cErr.GetData() != nil {
-							resp.Data = cErr.GetData()
+					if sErr, ok := cErr.(contract.IError); ok {
+						resp.Error = sErr.GetCode()
+						if sErr.GetData() != nil {
+							resp.Data = sErr.GetData()
 						} else {
-							resp.Data = cErr.Error()
+							resp.Data = sErr.Error()
 						}
 					} else {
-						log.Error(err)
+						log.Error(cErr)
 						resp.Error = errorcode.Panic
 					}
 				}
