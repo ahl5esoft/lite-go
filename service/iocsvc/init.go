@@ -16,6 +16,8 @@ import (
 // 初始化
 func Init[T any](yaml string, t *T) (err error) {
 	ioPath := pathsvc.NewIOPath()
+	Set(ioPath)
+
 	configLoader := yamlsvc.NewConfigLoader(ioPath, yaml)
 	if err = configLoader.Load(t); err != nil {
 		return
