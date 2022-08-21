@@ -7,7 +7,7 @@ import (
 )
 
 // redis选项
-func RedisOptions(options *redis.Options) redissvc.RedisOption[*redisAdapter] {
+func OptionsRedisOption(options *redis.Options) redissvc.RedisOption[*redisAdapter] {
 	return func(adapter *redisAdapter) {
 		adapter.options = options
 	}

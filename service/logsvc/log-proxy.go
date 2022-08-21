@@ -7,54 +7,54 @@ import (
 )
 
 type LogProxy struct {
-	DebugAction   func(map[string]string)
-	ErrorAction   func(map[string]string, error)
-	InfoAction    func(map[string]string)
-	WarningAction func(map[string]string)
+	DebugAction   func([][2]string)
+	ErrorAction   func(error, [][2]string)
+	InfoAction    func([][2]string)
+	WarningAction func([][2]string)
 
-	label map[string]string
+	labels [][2]string
 }
 
-func (m *LogProxy) AddLabel(key, f string, v ...interface{}) contract.ILog {
-	if m.label == nil {
-		m.label = map[string]string{}
+func (m *LogProxy) AddLabel(k, f string, v ...interface{}) contract.ILog {
+	if m.labels == nil {
+		m.labels = make([][2]string, 0)
 	}
 
 	if len(v) > 0 {
 		f = fmt.Sprintf(f, v...)
 	}
-	m.label[key] = f
+	m.labels = append(m.labels, [2]string{k, f})
 	return m
 }
 
 func (m *LogProxy) Debug() {
-	if len(m.label) == 0 {
+	if len(m.labels) == 0 {
 		return
 	}
 
-	m.DebugAction(m.label)
+	m.DebugAction(m.labels)
 }
 
 func (m *LogProxy) Error(err error) {
-	if len(m.label) == 0 && err == nil {
+	if err == nil && len(m.labels) == 0 {
 		return
 	}
 
-	m.ErrorAction(m.label, err)
+	m.ErrorAction(err, m.labels)
 }
 
 func (m *LogProxy) Info() {
-	if len(m.label) == 0 {
+	if len(m.labels) == 0 {
 		return
 	}
 
-	m.InfoAction(m.label)
+	m.InfoAction(m.labels)
 }
 
 func (m *LogProxy) Warning() {
-	if len(m.label) == 0 {
+	if len(m.labels) == 0 {
 		return
 	}
 
-	m.WarningAction(m.label)
+	m.WarningAction(m.labels)
 }

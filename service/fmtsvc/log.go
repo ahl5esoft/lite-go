@@ -9,20 +9,19 @@ import (
 
 // 创建格式化输出
 func NewLog() contract.ILog {
-	action := func(label map[string]string) {
-		fmt.Printf("%v\n", label)
+	action := func(labels [][2]string) {
+		for _, r := range labels {
+			fmt.Println(r[0], "->", r[1])
+		}
 	}
 	return &logsvc.LogProxy{
 		DebugAction: action,
-		ErrorAction: func(label map[string]string, err error) {
-			if label == nil {
-				label = map[string]string{
-					"err": err.Error(),
-				}
-			} else {
-				label["err"] = err.Error()
+		ErrorAction: func(err error, labels [][2]string) {
+			if labels == nil {
+				labels = make([][2]string, 0)
 			}
-			action(label)
+			labels = append(labels, [2]string{"err", err.Error()})
+			action(labels)
 		},
 		InfoAction:    action,
 		WarningAction: action,
