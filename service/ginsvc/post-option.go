@@ -5,32 +5,31 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"net/url"
 	"reflect"
 	"runtime/debug"
 
 	"github.com/ahl5esoft/lite-go/contract"
 	errorcode "github.com/ahl5esoft/lite-go/model/enum/error-code"
+	headerkey "github.com/ahl5esoft/lite-go/model/enum/header-key"
 	"github.com/ahl5esoft/lite-go/model/message"
 	"github.com/ahl5esoft/lite-go/service/errorsvc"
 	"github.com/ahl5esoft/lite-go/service/iocsvc"
-
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
+	jsoniter "github.com/json-iterator/go"
 	"github.com/opentracing/opentracing-go"
 )
 
-type routeParam struct {
-	API      string `uri:"api"`
-	Endpoint string `uri:"endpoint"`
-}
-
 func NewPostOption(
-	apiFactory contract.IApiFactory,
 	logFactory contract.ILogFactory,
+	routeRule string,
+	getApiFunc func(ctx *gin.Context) (contract.IApi, error),
+	getUserAuthFunc func(string) (message.UserAuth, error),
 ) Option {
 	return func(app *gin.Engine) {
 		validate := validator.New()
-		app.POST("/:endpoint/:api", func(ctx *gin.Context) {
+		app.POST(routeRule, func(ctx *gin.Context) {
 			var api contract.IApi
 			var resp message.API
 			var err error
@@ -77,9 +76,24 @@ func NewPostOption(
 				log.AddLabel("header", "%v", ctx.Request.Header)
 			}
 
-			var rp routeParam
-			_ = ctx.ShouldBindUri(&rp)
-			if api, err = apiFactory.Build(rp.Endpoint, rp.API); err != nil {
+			if token := ctx.GetHeader(headerkey.AuthToken); token != "" {
+				var userAuth message.UserAuth
+				if userAuth, err = getUserAuthFunc(token); err != nil {
+					return
+				}
+
+				var s string
+				if s, err = jsoniter.MarshalToString(userAuth); err != nil {
+					return
+				}
+
+				ctx.Request.Header.Add(
+					headerkey.AuthToken,
+					url.QueryEscape(s),
+				)
+			}
+
+			if api, err = getApiFunc(ctx); err != nil {
 				return
 			}
 
