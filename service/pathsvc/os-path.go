@@ -3,17 +3,16 @@ package pathsvc
 import (
 	"path/filepath"
 
-	"github.com/ahl5esoft/lite-go/contract"
-
 	underscore "github.com/ahl5esoft/golang-underscore"
+	"github.com/ahl5esoft/lite-go/contract"
 )
 
 type osPath struct {
-	root string
+	wd string
 }
 
-func (m osPath) GetRoot() string {
-	return m.root
+func (m osPath) Getwd() string {
+	return m.wd
 }
 
 func (m osPath) Join(paths ...string) string {
@@ -33,8 +32,8 @@ func (m osPath) Join(paths ...string) string {
 }
 
 // 创建系统路径
-func NewIOPath(rootArgs ...string) contract.IOsPath {
+func NewIOPath(paths ...string) contract.IOsPath {
 	p := new(osPath)
-	p.root = p.Join(rootArgs...)
+	p.wd = p.Join(paths...)
 	return p
 }
