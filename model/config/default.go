@@ -5,14 +5,11 @@ type Default struct {
 	// Mongo
 	Mongo string
 	// 名字
-	Name string `yaml:"name"`
+	Name string
 	// 端口
-	Port int `yaml:"port"`
+	Port int
 	// redis
-	Redis struct {
-		Host     string
-		Password string
-	}
+	Redis DefaultRedis
 }
 
 func (m Default) GetMongo() string {
@@ -27,9 +24,6 @@ func (m Default) GetPort() int {
 	return m.Port
 }
 
-func (m Default) GetRedis() struct {
-	Host     string
-	Password string
-} {
+func (m Default) GetRedis() DefaultRedis {
 	return m.Redis
 }

@@ -5,12 +5,16 @@ import (
 
 	"github.com/ahl5esoft/lite-go/contract"
 	mcontract "github.com/ahl5esoft/lite-go/model/contract"
+	"github.com/ahl5esoft/lite-go/service/cmdsvc"
+	"github.com/ahl5esoft/lite-go/service/execsvc"
 	"github.com/ahl5esoft/lite-go/service/fmtsvc"
+	"github.com/ahl5esoft/lite-go/service/goredissvc"
 	"github.com/ahl5esoft/lite-go/service/logsvc"
 	"github.com/ahl5esoft/lite-go/service/mongosvc"
 	"github.com/ahl5esoft/lite-go/service/pathsvc"
 	"github.com/ahl5esoft/lite-go/service/timesvc"
 	"github.com/ahl5esoft/lite-go/service/yamlsvc"
+	"github.com/go-redis/redis/v8"
 )
 
 // 初始化
@@ -33,6 +37,12 @@ func Init[T any](yaml string, t *T) (err error) {
 	Set(configLoader)
 
 	Set(
+		cmdsvc.NewCommandFactory(func(name string, args []string) contract.ICommand {
+			return execsvc.NewCommand(name, args)
+		}),
+	)
+
+	Set(
 		logsvc.NewLogFactory(func() contract.ILog {
 			return fmtsvc.NewLog()
 		}),
@@ -51,19 +61,15 @@ func Init[T any](yaml string, t *T) (err error) {
 		timesvc.NewNowTime(),
 	)
 
-	if cfg.GetRedis().Host != "" {
-		// 	addr := cfg.GetRedis().Host
-		// 	if !strings.Contains(addr, ":") {
-		// 		addr = fmt.Sprintf("%s:6379", addr)
-		// 	}
-		// 	Set(
-		// 		goredissvc.NewRedis(
-		// 			goredissvc.RedisOptions(&redis.Options{
-		// 				Addr:     addr,
-		// 				Password: cfg.GetRedis().Password,
-		// 			}),
-		// 		),
-		// 	)
+	if cfg.GetRedis().GetAddr() != "" {
+		Set(
+			goredissvc.NewRedis(
+				goredissvc.OptionsRedisOption(&redis.Options{
+					Addr:     cfg.GetRedis().GetAddr(),
+					Password: cfg.GetRedis().GetPassword(),
+				}),
+			),
+		)
 	}
 
 	Set(

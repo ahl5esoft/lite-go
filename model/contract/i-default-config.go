@@ -5,8 +5,5 @@ type IDefaultConfig interface {
 	GetMongo() string
 	GetName() string
 	GetPort() int
-	GetRedis() struct {
-		Host     string
-		Password string
-	}
+	GetRedis() IRedisOption
 }
