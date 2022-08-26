@@ -1,5 +1,7 @@
 package config
 
+import "github.com/ahl5esoft/lite-go/model/contract"
+
 // 默认配置
 type Default struct {
 	// Mongo
@@ -24,6 +26,6 @@ func (m Default) GetPort() int {
 	return m.Port
 }
 
-func (m Default) GetRedis() DefaultRedis {
+func (m Default) GetRedis() contract.IRedisOption {
 	return m.Redis
 }
