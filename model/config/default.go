@@ -4,6 +4,8 @@ import "github.com/ahl5esoft/lite-go/model/contract"
 
 // 默认配置
 type Default struct {
+	// 网关地址
+	Gateway string
 	// Mongo
 	Mongo string
 	// 名字
@@ -12,6 +14,10 @@ type Default struct {
 	Port int
 	// redis
 	Redis DefaultRedis
+}
+
+func (m Default) GetGateway() string {
+	return m.Gateway
 }
 
 func (m Default) GetMongo() string {

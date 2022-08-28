@@ -8,8 +8,9 @@ import (
 	"github.com/ahl5esoft/lite-go/service/cmdsvc"
 	"github.com/ahl5esoft/lite-go/service/execsvc"
 	"github.com/ahl5esoft/lite-go/service/fmtsvc"
+	"github.com/ahl5esoft/lite-go/service/genericsvc"
 	"github.com/ahl5esoft/lite-go/service/goredissvc"
-	"github.com/ahl5esoft/lite-go/service/logsvc"
+	"github.com/ahl5esoft/lite-go/service/httpsvc"
 	"github.com/ahl5esoft/lite-go/service/mongosvc"
 	"github.com/ahl5esoft/lite-go/service/pathsvc"
 	"github.com/ahl5esoft/lite-go/service/timesvc"
@@ -42,8 +43,18 @@ func Init[T any](yaml string, t *T) (err error) {
 		}),
 	)
 
+	if cfg.GetGateway() != "" {
+		Set(
+			genericsvc.NewFactory[contract.IRpcFactory](func() contract.IRpc {
+				return httpsvc.NewRpc(
+					cfg.GetGateway(),
+				)
+			}),
+		)
+	}
+
 	Set(
-		logsvc.NewLogFactory(func() contract.ILog {
+		genericsvc.NewFactory[contract.ILogFactory](func() contract.ILog {
 			return fmtsvc.NewLog()
 		}),
 	)
