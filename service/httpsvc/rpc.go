@@ -18,7 +18,7 @@ type rpc struct {
 	header map[string]string
 }
 
-func (m *rpc) Call(route string, res *message.Api) (err error) {
+func (m *rpc) Call(route string, res *message.ApiResponse) (err error) {
 	routeParts := strings.Split(route, "/")
 	if len(routeParts) == 3 {
 		route = strings.Join([]string{

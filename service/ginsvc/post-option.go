@@ -31,7 +31,7 @@ func NewPostOption(
 		validate := validator.New()
 		app.POST(routeRule, func(ctx *gin.Context) {
 			var api contract.IApi
-			var resp message.Api
+			var resp message.ApiResponse
 			var err error
 			defer func() {
 				ctx.JSON(http.StatusOK, resp)
