@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/ahl5esoft/lite-go/contract"
-
 	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 )

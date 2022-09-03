@@ -2,13 +2,13 @@ package httpsvc
 
 import (
 	"bytes"
-	"fmt"
 	"io"
 	"net/http"
 	"strings"
 
 	"github.com/ahl5esoft/lite-go/contract"
-	"github.com/ahl5esoft/lite-go/model/message"
+	mcontract "github.com/ahl5esoft/lite-go/model/contract"
+	"github.com/ahl5esoft/lite-go/service/errorsvc"
 	jsoniter "github.com/json-iterator/go"
 )
 
@@ -18,7 +18,19 @@ type rpc struct {
 	header map[string]string
 }
 
-func (m *rpc) Call(route string, res *message.ApiResponse) (err error) {
+func (m *rpc) Call(route string, res interface{}) (err error) {
+	if err = m.CallWithoutResponseError(route, res); err == nil {
+		if apiResp, ok := res.(mcontract.IApiResposne); ok && apiResp.GetErrorCode() != 0 {
+			err = errorsvc.New(
+				apiResp.GetErrorCode(),
+				apiResp.GetData(),
+			)
+		}
+	}
+	return
+}
+
+func (m *rpc) CallWithoutResponseError(route string, res interface{}) (err error) {
 	routeParts := strings.Split(route, "/")
 	if len(routeParts) == 3 {
 		route = strings.Join([]string{
@@ -38,11 +50,7 @@ func (m *rpc) Call(route string, res *message.ApiResponse) (err error) {
 		reader = bytes.NewReader(bf)
 	}
 	var req *http.Request
-	req, err = http.NewRequest(
-		"post",
-		fmt.Sprintf("%s/%s", m.url, route),
-		reader,
-	)
+	req, err = http.NewRequest("POST", m.url+route, reader)
 	if err != nil {
 		return
 	}

@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIUnitOfWork is a mock of IUnitOfWork interface
+// MockIUnitOfWork is a mock of IUnitOfWork interface.
 type MockIUnitOfWork struct {
 	ctrl     *gomock.Controller
 	recorder *MockIUnitOfWorkMockRecorder
 }
 
-// MockIUnitOfWorkMockRecorder is the mock recorder for MockIUnitOfWork
+// MockIUnitOfWorkMockRecorder is the mock recorder for MockIUnitOfWork.
 type MockIUnitOfWorkMockRecorder struct {
 	mock *MockIUnitOfWork
 }
 
-// NewMockIUnitOfWork creates a new mock instance
+// NewMockIUnitOfWork creates a new mock instance.
 func NewMockIUnitOfWork(ctrl *gomock.Controller) *MockIUnitOfWork {
 	mock := &MockIUnitOfWork{ctrl: ctrl}
 	mock.recorder = &MockIUnitOfWorkMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIUnitOfWork) EXPECT() *MockIUnitOfWorkMockRecorder {
 	return m.recorder
 }
 
-// Commit mocks base method
+// Commit mocks base method.
 func (m *MockIUnitOfWork) Commit() error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Commit")
@@ -40,8 +41,20 @@ func (m *MockIUnitOfWork) Commit() error {
 	return ret0
 }
 
-// Commit indicates an expected call of Commit
+// Commit indicates an expected call of Commit.
 func (mr *MockIUnitOfWorkMockRecorder) Commit() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Commit", reflect.TypeOf((*MockIUnitOfWork)(nil).Commit))
+}
+
+// RegisterAfter mocks base method.
+func (m *MockIUnitOfWork) RegisterAfter(arg0 func() error, arg1 string) {
+	m.ctrl.T.Helper()
+	m.ctrl.Call(m, "RegisterAfter", arg0, arg1)
+}
+
+// RegisterAfter indicates an expected call of RegisterAfter.
+func (mr *MockIUnitOfWorkMockRecorder) RegisterAfter(arg0, arg1 interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "RegisterAfter", reflect.TypeOf((*MockIUnitOfWork)(nil).RegisterAfter), arg0, arg1)
 }

@@ -2,7 +2,6 @@ package mongosvc
 
 import (
 	"github.com/ahl5esoft/lite-go/contract"
-
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 

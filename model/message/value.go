@@ -7,7 +7,7 @@ type Value struct {
 	// 数量,
 	Count int64 `validate:"required"`
 	// 来源
-	Source string `validate:"required"`
+	Source string
 }
 
 // 获取数量
@@ -22,5 +22,5 @@ func (m Value) GetSource() string {
 
 // 获取数值类型
 func (m Value) GetValueType() int {
-	return m.GetValueType()
+	return m.ValueType
 }

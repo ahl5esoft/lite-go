@@ -3,39 +3,15 @@ package mongosvc
 import (
 	underscore "github.com/ahl5esoft/golang-underscore"
 	"github.com/ahl5esoft/lite-go/model/contract"
-
+	"github.com/ahl5esoft/lite-go/service/dbsvc"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
 type unitOfWork struct {
-	dbPool     *dbPool
+	dbsvc.UnitOfWork
+
 	writeModel map[string][]mongo.WriteModel
-}
-
-func (m *unitOfWork) Commit() error {
-	if len(m.writeModel) == 0 {
-		return nil
-	}
-
-	client, db, err := m.dbPool.GetClientAndDb()
-	if err != nil {
-		return err
-	}
-
-	return client.UseSession(m.dbPool.Ctx, func(ctx mongo.SessionContext) (err error) {
-		defer func() {
-			m.writeModel = make(map[string][]mongo.WriteModel)
-		}()
-
-		for k, v := range m.writeModel {
-			if _, err = db.Collection(k).BulkWrite(ctx, v); err != nil {
-				return
-			}
-		}
-
-		return
-	})
 }
 
 func (m *unitOfWork) RegisterAdd(entry contract.IDbModel) {
@@ -92,8 +68,34 @@ func (m *unitOfWork) appendWriteModel(entry contract.IDbModel, writeModel mongo.
 }
 
 func newUnitOfWork(dbPool *dbPool) *unitOfWork {
+	writeModel := make(map[string][]mongo.WriteModel)
 	return &unitOfWork{
-		dbPool:     dbPool,
-		writeModel: make(map[string][]mongo.WriteModel),
+		UnitOfWork: dbsvc.UnitOfWork{
+			CommitAction: func() error {
+				if len(writeModel) == 0 {
+					return nil
+				}
+
+				client, db, err := dbPool.GetClientAndDb()
+				if err != nil {
+					return err
+				}
+
+				return client.UseSession(dbPool.Ctx, func(ctx mongo.SessionContext) (err error) {
+					defer func() {
+						writeModel = make(map[string][]mongo.WriteModel)
+					}()
+
+					for k, v := range writeModel {
+						if _, err = db.Collection(k).BulkWrite(ctx, v); err != nil {
+							return
+						}
+					}
+
+					return
+				})
+			},
+		},
+		writeModel: writeModel,
 	}
 }

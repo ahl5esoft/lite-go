@@ -59,6 +59,10 @@ func NewPostOption(
 
 				if cErr != nil {
 					if sErr, ok := cErr.(contract.IError); ok {
+						if sErr.GetCode() == errorcode.Validate {
+							log.Warning()
+						}
+
 						resp.Error = sErr.GetCode()
 						if sErr.GetData() != nil {
 							resp.Data = sErr.GetData()
@@ -125,7 +129,11 @@ func NewPostOption(
 				}
 
 				if err = validate.Struct(api); err != nil {
-					err = errorsvc.Newf(errorcode.Verify, "")
+					err = errorsvc.Newf(errorcode.Validate, "")
+					log.AddLabel(
+						"validate",
+						err.Error(),
+					)
 					return
 				}
 			}
