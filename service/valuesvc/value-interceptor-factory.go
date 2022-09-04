@@ -39,7 +39,11 @@ func (m *valueInterceptorFactory[T]) Build(changeValue message.ChangeValue) (res
 
 		for _, r := range valueTypeItems {
 			if v, ok := m.valueTypeInterceptor[r.GetValue()]; ok {
-				m.metadata[r.GetValue()] = reflect.TypeOf(v)
+				t := reflect.TypeOf(v)
+				if t.Kind() == reflect.Ptr {
+					t = t.Elem()
+				}
+				m.metadata[r.GetValue()] = t
 			} else {
 				for _, cr := range m.predicateInterceptors {
 					if cr.predicate(r) {
@@ -58,7 +62,7 @@ func (m *valueInterceptorFactory[T]) Build(changeValue message.ChangeValue) (res
 	if t, ok := m.metadata[changeValue.ValueType]; ok {
 		v := reflect.New(t)
 		iocsvc.Inject(v, nil)
-		res = v.Elem().Interface().(contract.IValueInterceptor)
+		res = v.Interface().(contract.IValueInterceptor)
 	} else {
 		res = m.defaultInterceptor
 	}

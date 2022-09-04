@@ -4,6 +4,8 @@ package contract
 type IValueType interface {
 	IEnumItem
 
+	// 获取每日数值
+	GetDailyTime() int
 	// 获取是否替换
 	GetIsReplace() bool
 }

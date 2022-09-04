@@ -12,6 +12,7 @@ import (
 type valueService[T mcontract.IValue, TLog mcontract.IValueLog, TValueType mcontract.IValueType] struct {
 	dbFactory               contract.IDbFactory
 	enumFactory             contract.IEnumFactory
+	nowTime                 contract.INowTime
 	stringGenerator         contract.IStringGenerator
 	valueInterceptorFactory contract.IValueInterceptorFactory
 	filter                  bson.M
@@ -77,14 +78,28 @@ func (m *valueService[T, TLog, TValueType]) Update(uow contract.IUnitOfWork, sou
 			value[r.ValueType] = 0
 		}
 
-		if valueTypeItem.GetIsReplace() {
-			value[r.ValueType] = 0
-		} else if r.Count == 0 {
-			continue
-		}
-
 		if r.Source == "" {
 			r.Source = source
+		}
+
+		logEntry = m.createLogEntryFunc(r.ValueType, value[r.ValueType], r.Source)
+		if logDb == nil {
+			logDb = m.dbFactory.Db(logEntry, uow)
+		}
+
+		if valueTypeItem.GetIsReplace() {
+			value[r.ValueType] = 0
+		} else if valueTypeItem.GetDailyTime() != 0 {
+			ok := m.nowTime.IsSame(
+				value[valueTypeItem.GetDailyTime()],
+				"week",
+			)
+			if !ok {
+				value[valueTypeItem.GetDailyTime()] = m.nowTime.Unix()
+				value[r.ValueType] = 0
+			}
+		} else if r.Count == 0 {
+			continue
 		}
 
 		var interceptor contract.IValueInterceptor
@@ -97,11 +112,6 @@ func (m *valueService[T, TLog, TValueType]) Update(uow contract.IUnitOfWork, sou
 			return
 		} else if ok {
 			continue
-		}
-
-		logEntry = m.createLogEntryFunc(r.ValueType, value[r.ValueType], r.Source)
-		if logDb == nil {
-			logDb = m.dbFactory.Db(logEntry, uow)
 		}
 
 		value[r.ValueType] += r.Count
@@ -158,6 +168,7 @@ func (m *valueService[T, TLog, TValueType]) findEntries() (res []T, err error) {
 func NewValueService[T mcontract.IValue, TLog mcontract.IValueLog, TValueType mcontract.IValueType](
 	dbFactory contract.IDbFactory,
 	enumFactory contract.IEnumFactory,
+	nowTime contract.INowTime,
 	stringGenerator contract.IStringGenerator,
 	valueInterceptorFactory contract.IValueInterceptorFactory,
 	filter bson.M,
@@ -170,6 +181,7 @@ func NewValueService[T mcontract.IValue, TLog mcontract.IValueLog, TValueType mc
 		dbFactory:               dbFactory,
 		enumFactory:             enumFactory,
 		filter:                  filter,
+		nowTime:                 nowTime,
 		stringGenerator:         stringGenerator,
 		valueInterceptorFactory: valueInterceptorFactory,
 	}
