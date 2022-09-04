@@ -9,3 +9,7 @@ type UserValue struct {
 func (m UserValue) GetID() string {
 	return m.ID
 }
+
+func (m UserValue) GetValue() map[int]int64 {
+	return m.Value
+}

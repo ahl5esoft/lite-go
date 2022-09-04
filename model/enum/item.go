@@ -4,15 +4,15 @@ import "fmt"
 
 // 枚举项
 type Item struct {
-	Value int
-	Name  string
+	Value    int
+	EnumName string
 }
 
 // 获取自定义多语言键
 func (m Item) GetCustomEncodingKey(attr string) string {
 	return fmt.Sprintf(
 		"%s-%d-%s",
-		m.Name,
+		m.EnumName,
 		m.Value,
 		attr,
 	)

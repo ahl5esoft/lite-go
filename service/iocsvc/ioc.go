@@ -38,7 +38,12 @@ func Has[T any](name string) bool {
 
 // 遍历实例内的需要依赖注入的字段进行注入
 func Inject(instance interface{}, filterFunc func(reflect.Value) reflect.Value) {
-	instanceValue := reflect.ValueOf(instance)
+	var instanceValue reflect.Value
+	var ok bool
+	if instanceValue, ok = instance.(reflect.Value); !ok {
+		instanceValue = reflect.ValueOf(instance)
+	}
+
 	if instanceValue.Kind() != reflect.Ptr {
 		panic(instanceIsNotPtr)
 	}

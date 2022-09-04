@@ -3,24 +3,20 @@ package enumsvc
 import (
 	"testing"
 
-	"github.com/ahl5esoft/lite-go/contract"
-	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 )
 
 func Test_enumFactory_Build(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		ctrl := gomock.NewController(t)
-		defer ctrl.Finish()
-
-		mockEnum := contract.NewMockIEnum(ctrl)
-		self := NewEnumFactory(map[string]func() contract.IEnum{
-			"": func() contract.IEnum {
-				return mockEnum
+		self := NewEnumFactory(map[string]func() any{
+			"": func() any {
+				return "ok"
 			},
 		})
 
-		res := self.Build("")
-		assert.Equal(t, res, mockEnum)
+		var res string
+		err := self.Build("", &res)
+		assert.Nil(t, err)
+		assert.Equal(t, res, "ok")
 	})
 }

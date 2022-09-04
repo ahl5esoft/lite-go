@@ -1,11 +1,11 @@
 package global
 
 // 枚举模型
-type Enum struct {
-	ID    string `alias:"" bson:"_id" db:"_id"`
-	Items map[interface{}]interface{}
+type Enum[T any] struct {
+	ID    string `alias:"Enum" bson:"_id" db:"_id"`
+	Items []T
 }
 
-func (m Enum) GetID() string {
+func (m Enum[T]) GetID() string {
 	return m.ID
 }

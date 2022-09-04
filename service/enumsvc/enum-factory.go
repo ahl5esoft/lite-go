@@ -2,23 +2,39 @@ package enumsvc
 
 import (
 	"fmt"
+	"reflect"
+	"sync"
 
 	"github.com/ahl5esoft/lite-go/contract"
 )
 
-type enumFactory map[string]func() contract.IEnum
+type enumFactory struct {
+	once       sync.Once
+	enum       map[string]reflect.Value
+	buildFuncs map[string]func() any
+}
 
-func (m enumFactory) Build(name string) contract.IEnum {
-	if v, ok := m[name]; ok {
-		return v()
+func (m *enumFactory) Build(name string, v any) (err error) {
+	m.once.Do(func() {
+		m.enum = map[string]reflect.Value{}
+		for k, fn := range m.buildFuncs {
+			m.enum[k] = reflect.ValueOf(
+				fn(),
+			)
+		}
+	})
+
+	if cv, ok := m.enum[name]; ok {
+		reflect.ValueOf(v).Elem().Set(cv)
+	} else {
+		err = fmt.Errorf("无效枚举: %s", name)
 	}
-
-	panic(
-		fmt.Sprintf("无效枚举: %s", name),
-	)
+	return
 }
 
 // 创建枚举工厂
-func NewEnumFactory(buildFunc map[string]func() contract.IEnum) contract.IEnumFactory {
-	return enumFactory(buildFunc)
+func NewEnumFactory(buildFuncs map[string]func() any) contract.IEnumFactory {
+	return &enumFactory{
+		buildFuncs: buildFuncs,
+	}
 }

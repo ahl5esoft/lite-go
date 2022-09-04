@@ -1,8 +1,9 @@
 package contract
 
-// 数值
+// 目标数值
 type IValue interface {
-	GetCount() int64
-	GetSource() string
-	GetValueType() int
+	IDbModel
+
+	// 获取值
+	GetValue() map[int]int64
 }
