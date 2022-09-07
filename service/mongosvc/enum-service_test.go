@@ -50,23 +50,3 @@ func Test_enumService_AllItems(t *testing.T) {
 		})
 	})
 }
-
-func Test_enumService_GetItem(t *testing.T) {
-	t.Run("ok", func(t *testing.T) {
-		self := NewEnumService[enum.Item](nil, "test")
-
-		self.(*enumService[enum.Item]).items = []enum.Item{
-			{
-				Value: 1,
-			},
-		}
-
-		res, err := self.GetItem(func(r enum.Item) bool {
-			return r.Value == 1
-		})
-		assert.Nil(t, err)
-		assert.Equal(t, res, enum.Item{
-			Value: 1,
-		})
-	})
-}

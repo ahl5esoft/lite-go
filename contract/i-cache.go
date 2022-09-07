@@ -5,7 +5,7 @@ type ICache interface {
 	// 刷新
 	Flush() error
 	// 获取
-	Get(string, interface{}) error
+	Get(string, any) error
 	// 更新时间
 	GetUpdateOn() int64
 }
