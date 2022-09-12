@@ -8,4 +8,6 @@ type IValueType interface {
 	GetDailyTime() int
 	// 获取是否替换
 	GetIsReplace() bool
+	// 获取奖励
+	GetRewards() any
 }

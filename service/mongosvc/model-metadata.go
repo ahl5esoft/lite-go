@@ -84,7 +84,7 @@ func getModelMetadata[T any](model T) *modelMetadata {
 		t = t.Elem()
 	}
 
-	var v interface{}
+	var v any
 	var ok bool
 	if v, ok = modelMetadatas.Load(t); !ok {
 		v = &modelMetadata{

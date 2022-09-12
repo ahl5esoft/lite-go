@@ -1,11 +1,11 @@
 package iocsvc
 
 import (
-	"fmt"
-
 	"github.com/ahl5esoft/lite-go/contract"
 	mcontract "github.com/ahl5esoft/lite-go/model/contract"
+	iockey "github.com/ahl5esoft/lite-go/model/enum/ioc-key"
 	"github.com/ahl5esoft/lite-go/service/cmdsvc"
+	"github.com/ahl5esoft/lite-go/service/cryptosvc"
 	"github.com/ahl5esoft/lite-go/service/execsvc"
 	"github.com/ahl5esoft/lite-go/service/fmtsvc"
 	"github.com/ahl5esoft/lite-go/service/genericsvc"
@@ -19,23 +19,25 @@ import (
 )
 
 // 初始化
-func Init[T any](yaml string, t *T) (err error) {
+func Init[T mcontract.IDefaultConfig](yaml string) (res T, err error) {
 	ioPath := pathsvc.NewIOPath()
 	Set(ioPath)
 
 	configLoader := yamlsvc.NewConfigLoader(ioPath, yaml)
-	if err = configLoader.Load(t); err != nil {
-		return
-	}
-
-	var cfg mcontract.IDefaultConfig
-	var ok bool
-	if cfg, ok = any(t).(mcontract.IDefaultConfig); !ok {
-		err = fmt.Errorf("非mcontract.IDefaultConfig")
+	if err = configLoader.Load(&res); err != nil {
 		return
 	}
 
 	Set(configLoader)
+
+	SetWithName(
+		iockey.AuthCrypto,
+		cryptosvc.NewAesCrypto(
+			[]byte(
+				res.GetAuthCipher(),
+			),
+		),
+	)
 
 	Set(
 		cmdsvc.NewCommandFactory(func(name string, args []string) contract.ICommand {
@@ -43,11 +45,11 @@ func Init[T any](yaml string, t *T) (err error) {
 		}),
 	)
 
-	if cfg.GetGateway() != "" {
+	if res.GetGateway() != "" {
 		Set(
 			genericsvc.NewFactory[contract.IRpcFactory](func() contract.IRpc {
 				return httpsvc.NewRpc(
-					cfg.GetGateway(),
+					res.GetGateway(),
 				)
 			}),
 		)
@@ -59,11 +61,11 @@ func Init[T any](yaml string, t *T) (err error) {
 		}),
 	)
 
-	if cfg.GetMongo() != "" {
+	if res.GetMongo() != "" {
 		Set(
 			mongosvc.NewDbFactory(
-				cfg.GetName(),
-				cfg.GetMongo(),
+				res.GetName(),
+				res.GetMongo(),
 			),
 		)
 	}
@@ -72,12 +74,12 @@ func Init[T any](yaml string, t *T) (err error) {
 		timesvc.NewNowTime(),
 	)
 
-	if cfg.GetRedis().GetAddr() != "" {
+	if res.GetRedis().GetAddr() != "" {
 		Set(
 			goredissvc.NewRedis(
 				goredissvc.OptionsRedisOption(&redis.Options{
-					Addr:     cfg.GetRedis().GetAddr(),
-					Password: cfg.GetRedis().GetPassword(),
+					Addr:     res.GetRedis().GetAddr(),
+					Password: res.GetRedis().GetPassword(),
 				}),
 			),
 		)

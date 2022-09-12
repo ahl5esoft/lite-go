@@ -4,6 +4,8 @@ import "github.com/ahl5esoft/lite-go/model/contract"
 
 // 默认配置
 type Default struct {
+	// 认证密钥
+	AuthCipher string
 	// 网关地址
 	Gateway string
 	// Mongo
@@ -14,6 +16,10 @@ type Default struct {
 	Port int
 	// redis
 	Redis DefaultRedis
+}
+
+func (m Default) GetAuthCipher() string {
+	return m.AuthCipher
 }
 
 func (m Default) GetGateway() string {

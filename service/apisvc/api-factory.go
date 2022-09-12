@@ -8,9 +8,7 @@ import (
 	"github.com/ahl5esoft/lite-go/service/errorsvc"
 )
 
-var (
-	errNilApi = errorsvc.Newf(errorcode.API, "")
-)
+var errNilApi = errorsvc.New(errorcode.API, nil)
 
 // api工厂
 type apiFactory map[string]map[string]reflect.Type

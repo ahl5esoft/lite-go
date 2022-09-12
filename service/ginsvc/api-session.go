@@ -1,8 +1,7 @@
 package ginsvc
 
 import (
-	"net/url"
-
+	"github.com/ahl5esoft/lite-go/contract"
 	errorcode "github.com/ahl5esoft/lite-go/model/enum/error-code"
 	headerkey "github.com/ahl5esoft/lite-go/model/enum/header-key"
 	"github.com/ahl5esoft/lite-go/model/message"
@@ -12,17 +11,21 @@ import (
 )
 
 type ApiSession struct {
+	Crypto   contract.ICrypto `inject:"auth-crypto"`
 	UserAuth message.UserAuth
 }
 
 func (m *ApiSession) SetSession(ctx *gin.Context) error {
-	v := ctx.GetHeader(headerkey.AuthData)
-	if v != "" {
-		var err error
-		if v, err = url.QueryUnescape(v); err == nil {
-			if err = jsoniter.UnmarshalFromString(v, &(m.UserAuth)); err == nil {
-				return nil
-			}
+	if s := ctx.GetHeader(headerkey.AuthData); s != "" {
+		bf, err := m.Crypto.Decrypt(
+			[]byte(s),
+		)
+		if err != nil {
+			return err
+		}
+
+		if err = jsoniter.Unmarshal(bf, &(m.UserAuth)); err == nil {
+			return nil
 		}
 	}
 

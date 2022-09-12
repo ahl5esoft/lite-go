@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"io"
 	"net/http"
-	"net/url"
 	"reflect"
 	"runtime/debug"
 
@@ -22,10 +21,11 @@ import (
 )
 
 func NewPostOption(
+	authCrypto contract.ICrypto,
 	logFactory contract.ILogFactory,
 	routeRule string,
 	getApiFunc func(ctx *gin.Context) (contract.IApi, error),
-	getUserAuthFunc func(string) (message.UserAuth, error),
+	getUserAuthFunc func(string) (any, error),
 ) Option {
 	return func(app *gin.Engine) {
 		validate := validator.New()
@@ -81,19 +81,23 @@ func NewPostOption(
 			}
 
 			if token := ctx.GetHeader(headerkey.AuthToken); token != "" {
-				var userAuth message.UserAuth
+				var userAuth any
 				if userAuth, err = getUserAuthFunc(token); err != nil {
 					return
 				}
 
-				var s string
-				if s, err = jsoniter.MarshalToString(userAuth); err != nil {
+				var bf []byte
+				if bf, err = jsoniter.Marshal(userAuth); err != nil {
+					return
+				}
+
+				if bf, err = authCrypto.Encrypt(bf); err != nil {
 					return
 				}
 
 				ctx.Request.Header.Add(
-					headerkey.AuthToken,
-					url.QueryEscape(s),
+					headerkey.AuthData,
+					string(bf),
 				)
 			}
 
