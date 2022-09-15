@@ -5,42 +5,43 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIConfigLoader is a mock of IConfigLoader interface
+// MockIConfigLoader is a mock of IConfigLoader interface.
 type MockIConfigLoader struct {
 	ctrl     *gomock.Controller
 	recorder *MockIConfigLoaderMockRecorder
 }
 
-// MockIConfigLoaderMockRecorder is the mock recorder for MockIConfigLoader
+// MockIConfigLoaderMockRecorder is the mock recorder for MockIConfigLoader.
 type MockIConfigLoaderMockRecorder struct {
 	mock *MockIConfigLoader
 }
 
-// NewMockIConfigLoader creates a new mock instance
+// NewMockIConfigLoader creates a new mock instance.
 func NewMockIConfigLoader(ctrl *gomock.Controller) *MockIConfigLoader {
 	mock := &MockIConfigLoader{ctrl: ctrl}
 	mock.recorder = &MockIConfigLoaderMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIConfigLoader) EXPECT() *MockIConfigLoaderMockRecorder {
 	return m.recorder
 }
 
-// Load mocks base method
-func (m *MockIConfigLoader) Load(v interface{}) error {
+// Load mocks base method.
+func (m *MockIConfigLoader) Load(v any) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Load", v)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
-// Load indicates an expected call of Load
+// Load indicates an expected call of Load.
 func (mr *MockIConfigLoaderMockRecorder) Load(v interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Load", reflect.TypeOf((*MockIConfigLoader)(nil).Load), v)

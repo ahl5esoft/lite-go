@@ -5,35 +5,36 @@
 package contract
 
 import (
+	reflect "reflect"
+
 	message "github.com/ahl5esoft/lite-go/model/message"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
-// MockIValueInterceptor is a mock of IValueInterceptor interface
+// MockIValueInterceptor is a mock of IValueInterceptor interface.
 type MockIValueInterceptor struct {
 	ctrl     *gomock.Controller
 	recorder *MockIValueInterceptorMockRecorder
 }
 
-// MockIValueInterceptorMockRecorder is the mock recorder for MockIValueInterceptor
+// MockIValueInterceptorMockRecorder is the mock recorder for MockIValueInterceptor.
 type MockIValueInterceptorMockRecorder struct {
 	mock *MockIValueInterceptor
 }
 
-// NewMockIValueInterceptor creates a new mock instance
+// NewMockIValueInterceptor creates a new mock instance.
 func NewMockIValueInterceptor(ctrl *gomock.Controller) *MockIValueInterceptor {
 	mock := &MockIValueInterceptor{ctrl: ctrl}
 	mock.recorder = &MockIValueInterceptorMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIValueInterceptor) EXPECT() *MockIValueInterceptorMockRecorder {
 	return m.recorder
 }
 
-// After mocks base method
+// After mocks base method.
 func (m *MockIValueInterceptor) After(arg0 IUnitOfWork, arg1 IValueService, arg2 message.ChangeValue) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "After", arg0, arg1, arg2)
@@ -41,13 +42,13 @@ func (m *MockIValueInterceptor) After(arg0 IUnitOfWork, arg1 IValueService, arg2
 	return ret0
 }
 
-// After indicates an expected call of After
+// After indicates an expected call of After.
 func (mr *MockIValueInterceptorMockRecorder) After(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "After", reflect.TypeOf((*MockIValueInterceptor)(nil).After), arg0, arg1, arg2)
 }
 
-// Before mocks base method
+// Before mocks base method.
 func (m *MockIValueInterceptor) Before(arg0 IUnitOfWork, arg1 IValueService, arg2 message.ChangeValue) (bool, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Before", arg0, arg1, arg2)
@@ -56,7 +57,7 @@ func (m *MockIValueInterceptor) Before(arg0 IUnitOfWork, arg1 IValueService, arg
 	return ret0, ret1
 }
 
-// Before indicates an expected call of Before
+// Before indicates an expected call of Before.
 func (mr *MockIValueInterceptorMockRecorder) Before(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Before", reflect.TypeOf((*MockIValueInterceptor)(nil).Before), arg0, arg1, arg2)

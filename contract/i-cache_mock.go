@@ -48,7 +48,7 @@ func (mr *MockICacheMockRecorder) Flush() *gomock.Call {
 }
 
 // Get mocks base method.
-func (m *MockICache) Get(arg0 string, arg1 interface{}) error {
+func (m *MockICache) Get(arg0 string, arg1 any) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0, arg1)
 	ret0, _ := ret[0].(error)

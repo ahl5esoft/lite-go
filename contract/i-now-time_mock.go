@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockINowTime is a mock of INowTime interface
+// MockINowTime is a mock of INowTime interface.
 type MockINowTime struct {
 	ctrl     *gomock.Controller
 	recorder *MockINowTimeMockRecorder
 }
 
-// MockINowTimeMockRecorder is the mock recorder for MockINowTime
+// MockINowTimeMockRecorder is the mock recorder for MockINowTime.
 type MockINowTimeMockRecorder struct {
 	mock *MockINowTime
 }
 
-// NewMockINowTime creates a new mock instance
+// NewMockINowTime creates a new mock instance.
 func NewMockINowTime(ctrl *gomock.Controller) *MockINowTime {
 	mock := &MockINowTime{ctrl: ctrl}
 	mock.recorder = &MockINowTimeMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockINowTime) EXPECT() *MockINowTimeMockRecorder {
 	return m.recorder
 }
 
-// IsSame mocks base method
+// IsSame mocks base method.
 func (m *MockINowTime) IsSame(arg0 int64, arg1 string) bool {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "IsSame", arg0, arg1)
@@ -40,13 +41,13 @@ func (m *MockINowTime) IsSame(arg0 int64, arg1 string) bool {
 	return ret0
 }
 
-// IsSame indicates an expected call of IsSame
+// IsSame indicates an expected call of IsSame.
 func (mr *MockINowTimeMockRecorder) IsSame(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "IsSame", reflect.TypeOf((*MockINowTime)(nil).IsSame), arg0, arg1)
 }
 
-// Unix mocks base method
+// Unix mocks base method.
 func (m *MockINowTime) Unix() int64 {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Unix")
@@ -54,7 +55,7 @@ func (m *MockINowTime) Unix() int64 {
 	return ret0
 }
 
-// Unix indicates an expected call of Unix
+// Unix indicates an expected call of Unix.
 func (mr *MockINowTimeMockRecorder) Unix() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Unix", reflect.TypeOf((*MockINowTime)(nil).Unix))

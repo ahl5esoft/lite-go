@@ -5,36 +5,37 @@
 package contract
 
 import (
+	reflect "reflect"
+
 	contract "github.com/ahl5esoft/lite-go/model/contract"
 	message "github.com/ahl5esoft/lite-go/model/message"
 	gomock "github.com/golang/mock/gomock"
-	reflect "reflect"
 )
 
-// MockIValueService is a mock of IValueService interface
+// MockIValueService is a mock of IValueService interface.
 type MockIValueService struct {
 	ctrl     *gomock.Controller
 	recorder *MockIValueServiceMockRecorder
 }
 
-// MockIValueServiceMockRecorder is the mock recorder for MockIValueService
+// MockIValueServiceMockRecorder is the mock recorder for MockIValueService.
 type MockIValueServiceMockRecorder struct {
 	mock *MockIValueService
 }
 
-// NewMockIValueService creates a new mock instance
+// NewMockIValueService creates a new mock instance.
 func NewMockIValueService(ctrl *gomock.Controller) *MockIValueService {
 	mock := &MockIValueService{ctrl: ctrl}
 	mock.recorder = &MockIValueServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIValueService) EXPECT() *MockIValueServiceMockRecorder {
 	return m.recorder
 }
 
-// CheckConditions mocks base method
+// CheckConditions mocks base method.
 func (m *MockIValueService) CheckConditions(arg0 IUnitOfWork, arg1 [][]contract.IValueCondition) (bool, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CheckConditions", arg0, arg1)
@@ -43,13 +44,13 @@ func (m *MockIValueService) CheckConditions(arg0 IUnitOfWork, arg1 [][]contract.
 	return ret0, ret1
 }
 
-// CheckConditions indicates an expected call of CheckConditions
+// CheckConditions indicates an expected call of CheckConditions.
 func (mr *MockIValueServiceMockRecorder) CheckConditions(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CheckConditions", reflect.TypeOf((*MockIValueService)(nil).CheckConditions), arg0, arg1)
 }
 
-// GetCount mocks base method
+// GetCount mocks base method.
 func (m *MockIValueService) GetCount(arg0 IUnitOfWork, arg1 int) (int64, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetCount", arg0, arg1)
@@ -58,13 +59,13 @@ func (m *MockIValueService) GetCount(arg0 IUnitOfWork, arg1 int) (int64, error) 
 	return ret0, ret1
 }
 
-// GetCount indicates an expected call of GetCount
+// GetCount indicates an expected call of GetCount.
 func (mr *MockIValueServiceMockRecorder) GetCount(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetCount", reflect.TypeOf((*MockIValueService)(nil).GetCount), arg0, arg1)
 }
 
-// GetEntry mocks base method
+// GetEntry mocks base method.
 func (m *MockIValueService) GetEntry(arg0 any) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetEntry", arg0)
@@ -72,13 +73,13 @@ func (m *MockIValueService) GetEntry(arg0 any) error {
 	return ret0
 }
 
-// GetEntry indicates an expected call of GetEntry
+// GetEntry indicates an expected call of GetEntry.
 func (mr *MockIValueServiceMockRecorder) GetEntry(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetEntry", reflect.TypeOf((*MockIValueService)(nil).GetEntry), arg0)
 }
 
-// Update mocks base method
+// Update mocks base method.
 func (m *MockIValueService) Update(arg0 IUnitOfWork, arg1 string, arg2 []message.ChangeValue) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Update", arg0, arg1, arg2)
@@ -86,7 +87,7 @@ func (m *MockIValueService) Update(arg0 IUnitOfWork, arg1 string, arg2 []message
 	return ret0
 }
 
-// Update indicates an expected call of Update
+// Update indicates an expected call of Update.
 func (mr *MockIValueServiceMockRecorder) Update(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Update", reflect.TypeOf((*MockIValueService)(nil).Update), arg0, arg1, arg2)

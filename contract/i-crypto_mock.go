@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockICrypto is a mock of ICrypto interface
+// MockICrypto is a mock of ICrypto interface.
 type MockICrypto struct {
 	ctrl     *gomock.Controller
 	recorder *MockICryptoMockRecorder
 }
 
-// MockICryptoMockRecorder is the mock recorder for MockICrypto
+// MockICryptoMockRecorder is the mock recorder for MockICrypto.
 type MockICryptoMockRecorder struct {
 	mock *MockICrypto
 }
 
-// NewMockICrypto creates a new mock instance
+// NewMockICrypto creates a new mock instance.
 func NewMockICrypto(ctrl *gomock.Controller) *MockICrypto {
 	mock := &MockICrypto{ctrl: ctrl}
 	mock.recorder = &MockICryptoMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockICrypto) EXPECT() *MockICryptoMockRecorder {
 	return m.recorder
 }
 
-// Compare mocks base method
+// Compare mocks base method.
 func (m *MockICrypto) Compare(arg0, arg1 []byte) (bool, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Compare", arg0, arg1)
@@ -41,13 +42,13 @@ func (m *MockICrypto) Compare(arg0, arg1 []byte) (bool, error) {
 	return ret0, ret1
 }
 
-// Compare indicates an expected call of Compare
+// Compare indicates an expected call of Compare.
 func (mr *MockICryptoMockRecorder) Compare(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Compare", reflect.TypeOf((*MockICrypto)(nil).Compare), arg0, arg1)
 }
 
-// Decrypt mocks base method
+// Decrypt mocks base method.
 func (m *MockICrypto) Decrypt(arg0 []byte) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Decrypt", arg0)
@@ -56,13 +57,13 @@ func (m *MockICrypto) Decrypt(arg0 []byte) ([]byte, error) {
 	return ret0, ret1
 }
 
-// Decrypt indicates an expected call of Decrypt
+// Decrypt indicates an expected call of Decrypt.
 func (mr *MockICryptoMockRecorder) Decrypt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Decrypt", reflect.TypeOf((*MockICrypto)(nil).Decrypt), arg0)
 }
 
-// Encrypt mocks base method
+// Encrypt mocks base method.
 func (m *MockICrypto) Encrypt(arg0 []byte) ([]byte, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Encrypt", arg0)
@@ -71,7 +72,7 @@ func (m *MockICrypto) Encrypt(arg0 []byte) ([]byte, error) {
 	return ret0, ret1
 }
 
-// Encrypt indicates an expected call of Encrypt
+// Encrypt indicates an expected call of Encrypt.
 func (mr *MockICryptoMockRecorder) Encrypt(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Encrypt", reflect.TypeOf((*MockICrypto)(nil).Encrypt), arg0)

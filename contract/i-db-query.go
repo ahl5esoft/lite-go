@@ -13,7 +13,7 @@ type IDbQuery interface {
 	// 限制
 	Take(v int) IDbQuery
 	// 数组结果
-	ToArray(dst interface{}) error
+	ToArray(dst any) error
 	// 条件
-	Where(args ...interface{}) IDbQuery
+	Where(args ...any) IDbQuery
 }

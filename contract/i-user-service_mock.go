@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIUserService is a mock of IUserService interface
+// MockIUserService is a mock of IUserService interface.
 type MockIUserService struct {
 	ctrl     *gomock.Controller
 	recorder *MockIUserServiceMockRecorder
 }
 
-// MockIUserServiceMockRecorder is the mock recorder for MockIUserService
+// MockIUserServiceMockRecorder is the mock recorder for MockIUserService.
 type MockIUserServiceMockRecorder struct {
 	mock *MockIUserService
 }
 
-// NewMockIUserService creates a new mock instance
+// NewMockIUserService creates a new mock instance.
 func NewMockIUserService(ctrl *gomock.Controller) *MockIUserService {
 	mock := &MockIUserService{ctrl: ctrl}
 	mock.recorder = &MockIUserServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIUserService) EXPECT() *MockIUserServiceMockRecorder {
 	return m.recorder
 }
 
-// GetRandSeedService mocks base method
+// GetRandSeedService mocks base method.
 func (m *MockIUserService) GetRandSeedService(arg0 string) IUserRandSeedService {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetRandSeedService", arg0)
@@ -40,13 +41,13 @@ func (m *MockIUserService) GetRandSeedService(arg0 string) IUserRandSeedService 
 	return ret0
 }
 
-// GetRandSeedService indicates an expected call of GetRandSeedService
+// GetRandSeedService indicates an expected call of GetRandSeedService.
 func (mr *MockIUserServiceMockRecorder) GetRandSeedService(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRandSeedService", reflect.TypeOf((*MockIUserService)(nil).GetRandSeedService), arg0)
 }
 
-// GetRewardService mocks base method
+// GetRewardService mocks base method.
 func (m *MockIUserService) GetRewardService() IUserRewardService {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetRewardService")
@@ -54,13 +55,13 @@ func (m *MockIUserService) GetRewardService() IUserRewardService {
 	return ret0
 }
 
-// GetRewardService indicates an expected call of GetRewardService
+// GetRewardService indicates an expected call of GetRewardService.
 func (mr *MockIUserServiceMockRecorder) GetRewardService() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetRewardService", reflect.TypeOf((*MockIUserService)(nil).GetRewardService))
 }
 
-// GetValueService mocks base method
+// GetValueService mocks base method.
 func (m *MockIUserService) GetValueService() IValueService {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetValueService")
@@ -68,7 +69,7 @@ func (m *MockIUserService) GetValueService() IValueService {
 	return ret0
 }
 
-// GetValueService indicates an expected call of GetValueService
+// GetValueService indicates an expected call of GetValueService.
 func (mr *MockIUserServiceMockRecorder) GetValueService() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetValueService", reflect.TypeOf((*MockIUserService)(nil).GetValueService))

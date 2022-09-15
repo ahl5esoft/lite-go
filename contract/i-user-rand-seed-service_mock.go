@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIUserRandSeedService is a mock of IUserRandSeedService interface
+// MockIUserRandSeedService is a mock of IUserRandSeedService interface.
 type MockIUserRandSeedService struct {
 	ctrl     *gomock.Controller
 	recorder *MockIUserRandSeedServiceMockRecorder
 }
 
-// MockIUserRandSeedServiceMockRecorder is the mock recorder for MockIUserRandSeedService
+// MockIUserRandSeedServiceMockRecorder is the mock recorder for MockIUserRandSeedService.
 type MockIUserRandSeedServiceMockRecorder struct {
 	mock *MockIUserRandSeedService
 }
 
-// NewMockIUserRandSeedService creates a new mock instance
+// NewMockIUserRandSeedService creates a new mock instance.
 func NewMockIUserRandSeedService(ctrl *gomock.Controller) *MockIUserRandSeedService {
 	mock := &MockIUserRandSeedService{ctrl: ctrl}
 	mock.recorder = &MockIUserRandSeedServiceMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIUserRandSeedService) EXPECT() *MockIUserRandSeedServiceMockRecorder {
 	return m.recorder
 }
 
-// Get mocks base method
+// Get mocks base method.
 func (m *MockIUserRandSeedService) Get(arg0 IUnitOfWork, arg1, arg2 int) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Get", arg0, arg1, arg2)
@@ -41,13 +42,13 @@ func (m *MockIUserRandSeedService) Get(arg0 IUnitOfWork, arg1, arg2 int) (int, e
 	return ret0, ret1
 }
 
-// Get indicates an expected call of Get
+// Get indicates an expected call of Get.
 func (mr *MockIUserRandSeedServiceMockRecorder) Get(arg0, arg1, arg2 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Get", reflect.TypeOf((*MockIUserRandSeedService)(nil).Get), arg0, arg1, arg2)
 }
 
-// Use mocks base method
+// Use mocks base method.
 func (m *MockIUserRandSeedService) Use(arg0 IUnitOfWork, arg1 int) (int, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Use", arg0, arg1)
@@ -56,7 +57,7 @@ func (m *MockIUserRandSeedService) Use(arg0 IUnitOfWork, arg1 int) (int, error) 
 	return ret0, ret1
 }
 
-// Use indicates an expected call of Use
+// Use indicates an expected call of Use.
 func (mr *MockIUserRandSeedServiceMockRecorder) Use(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Use", reflect.TypeOf((*MockIUserRandSeedService)(nil).Use), arg0, arg1)
