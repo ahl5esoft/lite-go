@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockILogFactory is a mock of ILogFactory interface
+// MockILogFactory is a mock of ILogFactory interface.
 type MockILogFactory struct {
 	ctrl     *gomock.Controller
 	recorder *MockILogFactoryMockRecorder
 }
 
-// MockILogFactoryMockRecorder is the mock recorder for MockILogFactory
+// MockILogFactoryMockRecorder is the mock recorder for MockILogFactory.
 type MockILogFactoryMockRecorder struct {
 	mock *MockILogFactory
 }
 
-// NewMockILogFactory creates a new mock instance
+// NewMockILogFactory creates a new mock instance.
 func NewMockILogFactory(ctrl *gomock.Controller) *MockILogFactory {
 	mock := &MockILogFactory{ctrl: ctrl}
 	mock.recorder = &MockILogFactoryMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockILogFactory) EXPECT() *MockILogFactoryMockRecorder {
 	return m.recorder
 }
 
-// Build mocks base method
+// Build mocks base method.
 func (m *MockILogFactory) Build() ILog {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Build")
@@ -40,7 +41,7 @@ func (m *MockILogFactory) Build() ILog {
 	return ret0
 }
 
-// Build indicates an expected call of Build
+// Build indicates an expected call of Build.
 func (mr *MockILogFactoryMockRecorder) Build() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockILogFactory)(nil).Build))

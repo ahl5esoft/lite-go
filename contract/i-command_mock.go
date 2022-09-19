@@ -51,7 +51,7 @@ func (mr *MockICommandMockRecorder) Exec() *gomock.Call {
 }
 
 // SetDir mocks base method.
-func (m *MockICommand) SetDir(format string, args ...interface{}) ICommand {
+func (m *MockICommand) SetDir(format string, args ...any) ICommand {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{format}
 	for _, a := range args {

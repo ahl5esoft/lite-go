@@ -5,40 +5,41 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIApiPort is a mock of IApiPort interface
+// MockIApiPort is a mock of IApiPort interface.
 type MockIApiPort struct {
 	ctrl     *gomock.Controller
 	recorder *MockIApiPortMockRecorder
 }
 
-// MockIApiPortMockRecorder is the mock recorder for MockIApiPort
+// MockIApiPortMockRecorder is the mock recorder for MockIApiPort.
 type MockIApiPortMockRecorder struct {
 	mock *MockIApiPort
 }
 
-// NewMockIApiPort creates a new mock instance
+// NewMockIApiPort creates a new mock instance.
 func NewMockIApiPort(ctrl *gomock.Controller) *MockIApiPort {
 	mock := &MockIApiPort{ctrl: ctrl}
 	mock.recorder = &MockIApiPortMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIApiPort) EXPECT() *MockIApiPortMockRecorder {
 	return m.recorder
 }
 
-// Listen mocks base method
+// Listen mocks base method.
 func (m *MockIApiPort) Listen() {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Listen")
 }
 
-// Listen indicates an expected call of Listen
+// Listen indicates an expected call of Listen.
 func (mr *MockIApiPortMockRecorder) Listen() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Listen", reflect.TypeOf((*MockIApiPort)(nil).Listen))

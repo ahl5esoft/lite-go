@@ -33,6 +33,20 @@ func (m *MockIDefaultConfig) EXPECT() *MockIDefaultConfigMockRecorder {
 	return m.recorder
 }
 
+// GetAuthCipher mocks base method.
+func (m *MockIDefaultConfig) GetAuthCipher() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetAuthCipher")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GetAuthCipher indicates an expected call of GetAuthCipher.
+func (mr *MockIDefaultConfigMockRecorder) GetAuthCipher() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetAuthCipher", reflect.TypeOf((*MockIDefaultConfig)(nil).GetAuthCipher))
+}
+
 // GetGateway mocks base method.
 func (m *MockIDefaultConfig) GetGateway() string {
 	m.ctrl.T.Helper()

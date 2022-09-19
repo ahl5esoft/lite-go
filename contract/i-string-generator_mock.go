@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIStringGenerator is a mock of IStringGenerator interface
+// MockIStringGenerator is a mock of IStringGenerator interface.
 type MockIStringGenerator struct {
 	ctrl     *gomock.Controller
 	recorder *MockIStringGeneratorMockRecorder
 }
 
-// MockIStringGeneratorMockRecorder is the mock recorder for MockIStringGenerator
+// MockIStringGeneratorMockRecorder is the mock recorder for MockIStringGenerator.
 type MockIStringGeneratorMockRecorder struct {
 	mock *MockIStringGenerator
 }
 
-// NewMockIStringGenerator creates a new mock instance
+// NewMockIStringGenerator creates a new mock instance.
 func NewMockIStringGenerator(ctrl *gomock.Controller) *MockIStringGenerator {
 	mock := &MockIStringGenerator{ctrl: ctrl}
 	mock.recorder = &MockIStringGeneratorMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIStringGenerator) EXPECT() *MockIStringGeneratorMockRecorder {
 	return m.recorder
 }
 
-// Generate mocks base method
+// Generate mocks base method.
 func (m *MockIStringGenerator) Generate() string {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Generate")
@@ -40,7 +41,7 @@ func (m *MockIStringGenerator) Generate() string {
 	return ret0
 }
 
-// Generate indicates an expected call of Generate
+// Generate indicates an expected call of Generate.
 func (mr *MockIStringGeneratorMockRecorder) Generate() *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Generate", reflect.TypeOf((*MockIStringGenerator)(nil).Generate))

@@ -34,7 +34,7 @@ func (m *MockILog) EXPECT() *MockILogMockRecorder {
 }
 
 // AddLabel mocks base method.
-func (m *MockILog) AddLabel(k, f string, v ...interface{}) ILog {
+func (m *MockILog) AddLabel(k, f string, v ...any) ILog {
 	m.ctrl.T.Helper()
 	varargs := []interface{}{k, f}
 	for _, a := range v {

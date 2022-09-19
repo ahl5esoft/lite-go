@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIEnumFactory is a mock of IEnumFactory interface
+// MockIEnumFactory is a mock of IEnumFactory interface.
 type MockIEnumFactory struct {
 	ctrl     *gomock.Controller
 	recorder *MockIEnumFactoryMockRecorder
 }
 
-// MockIEnumFactoryMockRecorder is the mock recorder for MockIEnumFactory
+// MockIEnumFactoryMockRecorder is the mock recorder for MockIEnumFactory.
 type MockIEnumFactoryMockRecorder struct {
 	mock *MockIEnumFactory
 }
 
-// NewMockIEnumFactory creates a new mock instance
+// NewMockIEnumFactory creates a new mock instance.
 func NewMockIEnumFactory(ctrl *gomock.Controller) *MockIEnumFactory {
 	mock := &MockIEnumFactory{ctrl: ctrl}
 	mock.recorder = &MockIEnumFactoryMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIEnumFactory) EXPECT() *MockIEnumFactoryMockRecorder {
 	return m.recorder
 }
 
-// Build mocks base method
+// Build mocks base method.
 func (m *MockIEnumFactory) Build(arg0 string, arg1 interface{}) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Build", arg0, arg1)
@@ -40,7 +41,7 @@ func (m *MockIEnumFactory) Build(arg0 string, arg1 interface{}) error {
 	return ret0
 }
 
-// Build indicates an expected call of Build
+// Build indicates an expected call of Build.
 func (mr *MockIEnumFactoryMockRecorder) Build(arg0, arg1 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockIEnumFactory)(nil).Build), arg0, arg1)

@@ -35,10 +35,10 @@ func (m *MockIApiResposne) EXPECT() *MockIApiResposneMockRecorder {
 }
 
 // GetData mocks base method.
-func (m *MockIApiResposne) GetData() interface{} {
+func (m *MockIApiResposne) GetData() any {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetData")
-	ret0, _ := ret[0].(interface{})
+	ret0, _ := ret[0].(any)
 	return ret0
 }
 

@@ -46,7 +46,7 @@ func (m *unitOfWork) RegisterSave(entry contract.IDbModel) {
 	).Each(func(r *fieldMetadata, _ int) {
 		if r.GetTableName() != "" {
 			writeModel.SetFilter(bson.M{
-				"_id": r.GetValue(entry),
+				"_id": entry.GetID(),
 			})
 		} else {
 			doc[r.GetColumnName()] = r.GetValue(entry)
@@ -82,11 +82,9 @@ func newUnitOfWork(dbPool *dbPool) *unitOfWork {
 				}
 
 				return client.UseSession(dbPool.Ctx, func(ctx mongo.SessionContext) (err error) {
-					defer func() {
-						writeModel = make(map[string][]mongo.WriteModel)
-					}()
-
 					for k, v := range writeModel {
+						delete(writeModel, k)
+
 						if _, err = db.Collection(k).BulkWrite(ctx, v); err != nil {
 							return
 						}

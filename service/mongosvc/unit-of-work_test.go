@@ -7,7 +7,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-func Test_unitOfWork_registerAdd(t *testing.T) {
+func Test_unitOfWork_RegisterAdd(t *testing.T) {
 	t.Run("未提交", func(t *testing.T) {
 		entry := testModel{
 			ID:   "id",
@@ -59,7 +59,7 @@ func Test_unitOfWork_registerAdd(t *testing.T) {
 	})
 }
 
-func Test_unitOfWork_registerRemove(t *testing.T) {
+func Test_unitOfWork_RegisterRemove(t *testing.T) {
 	t.Run("未提交", func(t *testing.T) {
 		entry := testModel{
 			ID:   "id",
@@ -80,6 +80,9 @@ func Test_unitOfWork_registerRemove(t *testing.T) {
 		}
 		uow := newUnitOfWork(pool)
 		uow.RegisterAdd(entry)
+		uow.Commit()
+
+		uow = newUnitOfWork(pool)
 		uow.RegisterRemove(entry)
 		err := uow.Commit()
 		assert.NoError(t, err)
@@ -108,7 +111,7 @@ func Test_unitOfWork_registerRemove(t *testing.T) {
 	})
 }
 
-func Test_unitOfWork_registerSave(t *testing.T) {
+func Test_unitOfWork_RegisterSave(t *testing.T) {
 	t.Run("未提交", func(t *testing.T) {
 		uow := newUnitOfWork(pool)
 		entry := testModel{

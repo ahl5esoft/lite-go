@@ -5,34 +5,35 @@
 package contract
 
 import (
-	gomock "github.com/golang/mock/gomock"
 	reflect "reflect"
+
+	gomock "github.com/golang/mock/gomock"
 )
 
-// MockIApiFactory is a mock of IApiFactory interface
+// MockIApiFactory is a mock of IApiFactory interface.
 type MockIApiFactory struct {
 	ctrl     *gomock.Controller
 	recorder *MockIApiFactoryMockRecorder
 }
 
-// MockIApiFactoryMockRecorder is the mock recorder for MockIApiFactory
+// MockIApiFactoryMockRecorder is the mock recorder for MockIApiFactory.
 type MockIApiFactoryMockRecorder struct {
 	mock *MockIApiFactory
 }
 
-// NewMockIApiFactory creates a new mock instance
+// NewMockIApiFactory creates a new mock instance.
 func NewMockIApiFactory(ctrl *gomock.Controller) *MockIApiFactory {
 	mock := &MockIApiFactory{ctrl: ctrl}
 	mock.recorder = &MockIApiFactoryMockRecorder{mock}
 	return mock
 }
 
-// EXPECT returns an object that allows the caller to indicate expected use
+// EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockIApiFactory) EXPECT() *MockIApiFactoryMockRecorder {
 	return m.recorder
 }
 
-// Build mocks base method
+// Build mocks base method.
 func (m *MockIApiFactory) Build(endpoint, api string) (IApi, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "Build", endpoint, api)
@@ -41,19 +42,19 @@ func (m *MockIApiFactory) Build(endpoint, api string) (IApi, error) {
 	return ret0, ret1
 }
 
-// Build indicates an expected call of Build
+// Build indicates an expected call of Build.
 func (mr *MockIApiFactoryMockRecorder) Build(endpoint, api interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Build", reflect.TypeOf((*MockIApiFactory)(nil).Build), endpoint, api)
 }
 
-// Register mocks base method
-func (m *MockIApiFactory) Register(endpoint, name string, api interface{}) {
+// Register mocks base method.
+func (m *MockIApiFactory) Register(endpoint, name string, api any) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Register", endpoint, name, api)
 }
 
-// Register indicates an expected call of Register
+// Register indicates an expected call of Register.
 func (mr *MockIApiFactoryMockRecorder) Register(endpoint, name, api interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Register", reflect.TypeOf((*MockIApiFactory)(nil).Register), endpoint, name, api)
