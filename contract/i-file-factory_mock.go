@@ -33,6 +33,24 @@ func (m *MockIFileFactory) EXPECT() *MockIFileFactoryMockRecorder {
 	return m.recorder
 }
 
+// BuildFile mocks base method.
+func (m *MockIFileFactory) BuildFile(paths ...string) IFile {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{}
+	for _, a := range paths {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "BuildFile", varargs...)
+	ret0, _ := ret[0].(IFile)
+	return ret0
+}
+
+// BuildFile indicates an expected call of BuildFile.
+func (mr *MockIFileFactoryMockRecorder) BuildFile(paths ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "BuildFile", reflect.TypeOf((*MockIFileFactory)(nil).BuildFile), paths...)
+}
+
 // BuildFileEntry mocks base method.
 func (m *MockIFileFactory) BuildFileEntry(paths ...string) IFileEntry {
 	m.ctrl.T.Helper()

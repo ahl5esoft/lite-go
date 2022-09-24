@@ -33,6 +33,24 @@ func (m *MockIFileEntry) EXPECT() *MockIFileEntryMockRecorder {
 	return m.recorder
 }
 
+// CopyTo mocks base method.
+func (m *MockIFileEntry) CopyTo(arg0 ...string) error {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{}
+	for _, a := range arg0 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CopyTo", varargs...)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CopyTo indicates an expected call of CopyTo.
+func (mr *MockIFileEntryMockRecorder) CopyTo(arg0 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CopyTo", reflect.TypeOf((*MockIFileEntry)(nil).CopyTo), arg0...)
+}
+
 // Exists mocks base method.
 func (m *MockIFileEntry) Exists() bool {
 	m.ctrl.T.Helper()

@@ -32,7 +32,7 @@ func (m osPath) Join(paths ...string) string {
 }
 
 // 创建系统路径
-func NewIOPath(paths ...string) contract.IOsPath {
+func NewOsPath(paths ...string) contract.IOsPath {
 	p := new(osPath)
 	p.wd = p.Join(paths...)
 	return p

@@ -12,14 +12,14 @@ type fileEntry struct {
 	path        string
 }
 
-func (m fileEntry) Copy(paths ...string) error {
-	fileEntry := m.fileFactory.BuildFileEntry(paths...)
-	if err := fileEntry.Remove(); err != nil {
-		return err
+func (m fileEntry) CopyTo(paths ...string) error {
+	dst := m.fileFactory.BuildFileEntry(paths...)
+	if dst.Exists() {
+		return os.ErrExist
 	}
 
 	return m.MoveTo(
-		fileEntry.GetPath(),
+		dst.GetPath(),
 	)
 }
 
@@ -38,10 +38,6 @@ func (m fileEntry) MoveTo(paths ...string) error {
 }
 
 func (m fileEntry) Remove() error {
-	if !m.Exists() {
-		return nil
-	}
-
 	return os.RemoveAll(m.path)
 }
 
