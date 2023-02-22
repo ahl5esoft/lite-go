@@ -1,4 +1,4 @@
-package ossvc
+package gosvc
 
 import (
 	"fmt"
@@ -38,8 +38,7 @@ func (m file) Read(v any) (err error) {
 	return
 }
 
-// 创建文件实例
-func NewFile(entry contract.IFileEntry) contract.IFile {
+func newFile(entry contract.IFileEntry) contract.IFile {
 	return &file{
 		IFileEntry: entry,
 	}

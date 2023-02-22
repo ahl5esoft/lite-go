@@ -33,6 +33,70 @@ func (m *MockIFile) EXPECT() *MockIFileMockRecorder {
 	return m.recorder
 }
 
+// CopyTo mocks base method.
+func (m *MockIFile) CopyTo(arg0 ...string) error {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{}
+	for _, a := range arg0 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "CopyTo", varargs...)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// CopyTo indicates an expected call of CopyTo.
+func (mr *MockIFileMockRecorder) CopyTo(arg0 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CopyTo", reflect.TypeOf((*MockIFile)(nil).CopyTo), arg0...)
+}
+
+// Exists mocks base method.
+func (m *MockIFile) Exists() bool {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Exists")
+	ret0, _ := ret[0].(bool)
+	return ret0
+}
+
+// Exists indicates an expected call of Exists.
+func (mr *MockIFileMockRecorder) Exists() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Exists", reflect.TypeOf((*MockIFile)(nil).Exists))
+}
+
+// GetPath mocks base method.
+func (m *MockIFile) GetPath() string {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPath")
+	ret0, _ := ret[0].(string)
+	return ret0
+}
+
+// GetPath indicates an expected call of GetPath.
+func (mr *MockIFileMockRecorder) GetPath() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPath", reflect.TypeOf((*MockIFile)(nil).GetPath))
+}
+
+// MoveTo mocks base method.
+func (m *MockIFile) MoveTo(arg0 ...string) error {
+	m.ctrl.T.Helper()
+	varargs := []interface{}{}
+	for _, a := range arg0 {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "MoveTo", varargs...)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// MoveTo indicates an expected call of MoveTo.
+func (mr *MockIFileMockRecorder) MoveTo(arg0 ...interface{}) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "MoveTo", reflect.TypeOf((*MockIFile)(nil).MoveTo), arg0...)
+}
+
 // Read mocks base method.
 func (m *MockIFile) Read(arg0 any) error {
 	m.ctrl.T.Helper()
@@ -45,4 +109,18 @@ func (m *MockIFile) Read(arg0 any) error {
 func (mr *MockIFileMockRecorder) Read(arg0 interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Read", reflect.TypeOf((*MockIFile)(nil).Read), arg0)
+}
+
+// Remove mocks base method.
+func (m *MockIFile) Remove() error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Remove")
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Remove indicates an expected call of Remove.
+func (mr *MockIFileMockRecorder) Remove() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Remove", reflect.TypeOf((*MockIFile)(nil).Remove))
 }

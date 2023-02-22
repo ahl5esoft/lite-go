@@ -2,25 +2,25 @@ package ginsvc
 
 import (
 	"github.com/ahl5esoft/lite-go/contract"
-
 	"github.com/gin-gonic/gin"
 )
 
 type apiPort struct {
-	options []Option
+	handler IHandler
+	mode    string
 }
 
 func (m apiPort) Listen() {
-	gin.SetMode(gin.ReleaseMode)
+	gin.SetMode(m.mode)
 	app := gin.New()
-
-	for _, r := range m.options {
-		r(app)
+	if err := m.handler.Handle(app); err != nil {
+		panic(err)
 	}
 }
 
-func NewApiPort(options ...Option) contract.IApiPort {
+func NewApiPort(handler IHandler, mode string) contract.IApiPort {
 	return &apiPort{
-		options: options,
+		handler: handler,
+		mode:    mode,
 	}
 }

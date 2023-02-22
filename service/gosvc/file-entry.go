@@ -1,4 +1,4 @@
-package ossvc
+package gosvc
 
 import (
 	"os"
@@ -8,7 +8,7 @@ import (
 
 type fileEntry struct {
 	fileFactory contract.IFileFactory
-	osPath      contract.IOsPath
+	filePath    contract.IFilePath
 	path        string
 }
 
@@ -33,7 +33,7 @@ func (m fileEntry) GetPath() string {
 }
 
 func (m fileEntry) MoveTo(paths ...string) error {
-	dstPath := m.osPath.Join(paths...)
+	dstPath := m.filePath.Join(paths...)
 	return os.Rename(m.path, dstPath)
 }
 
@@ -41,15 +41,14 @@ func (m fileEntry) Remove() error {
 	return os.RemoveAll(m.path)
 }
 
-// 创建文件项
-func NewFileEntry(
+func newFileEntry(
 	fileFactory contract.IFileFactory,
-	osPath contract.IOsPath,
+	filePath contract.IFilePath,
 	path string,
 ) contract.IFileEntry {
 	return fileEntry{
 		fileFactory: fileFactory,
-		osPath:      osPath,
+		filePath:    filePath,
 		path:        path,
 	}
 }

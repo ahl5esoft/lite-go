@@ -1,4 +1,4 @@
-package pathsvc
+package gosvc
 
 import (
 	"path/filepath"
@@ -7,15 +7,15 @@ import (
 	"github.com/ahl5esoft/lite-go/contract"
 )
 
-type osPath struct {
+type filePath struct {
 	wd string
 }
 
-func (m osPath) Getwd() string {
+func (m filePath) Getwd() string {
 	return m.wd
 }
 
-func (m osPath) Join(paths ...string) string {
+func (m filePath) Join(paths ...string) string {
 	var res string
 	underscore.Chain(paths).Aggregate(func(memo string, r string, _ int) string {
 		if memo == "" {
@@ -31,9 +31,8 @@ func (m osPath) Join(paths ...string) string {
 	return res
 }
 
-// 创建系统路径
-func NewOsPath(paths ...string) contract.IOsPath {
-	p := new(osPath)
+func NewFilePath(paths ...string) contract.IFilePath {
+	p := new(filePath)
 	p.wd = p.Join(paths...)
 	return p
 }

@@ -1,7 +1,6 @@
 package contract
 
-// 相同路径
-type IOsPath interface {
+type IFilePath interface {
 	Getwd() string
 	Join(paths ...string) string
 }

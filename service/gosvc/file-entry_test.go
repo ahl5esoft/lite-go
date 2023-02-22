@@ -1,4 +1,4 @@
-package ossvc
+package gosvc
 
 import (
 	"io/fs"
@@ -32,8 +32,8 @@ func Test_fileEntry_CopyTo(t *testing.T) {
 		defer os.Remove(dstFilePath)
 
 		mockFileFactory := contract.NewMockIFileFactory(ctrl)
-		mockOsPath := contract.NewMockIOsPath(ctrl)
-		file := NewFileEntry(mockFileFactory, mockOsPath, srcFilePath)
+		mockFilePath := contract.NewMockIFilePath(ctrl)
+		file := newFileEntry(mockFileFactory, mockFilePath, srcFilePath)
 
 		mockFile := contract.NewMockIFileEntry(ctrl)
 		mockFileFactory.EXPECT().BuildFileEntry(dstFilePath).Return(mockFile)
@@ -42,7 +42,7 @@ func Test_fileEntry_CopyTo(t *testing.T) {
 
 		mockFile.EXPECT().GetPath().Return(dstFilePath)
 
-		mockOsPath.EXPECT().Join(dstFilePath).Return(dstFilePath)
+		mockFilePath.EXPECT().Join(dstFilePath).Return(dstFilePath)
 
 		err = file.CopyTo(dstFilePath)
 		assert.Nil(t, err)
@@ -60,7 +60,7 @@ func Test_fileEntry_CopyTo(t *testing.T) {
 func Test_fileEntry_Exists(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		wd, _ := os.Getwd()
-		res := NewFileEntry(
+		res := newFileEntry(
 			nil,
 			nil,
 			path.Join(wd, "file.go"),

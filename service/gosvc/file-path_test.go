@@ -1,37 +1,37 @@
-package pathsvc
+package gosvc
 
 import (
-	"path/filepath"
+	fp "path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
-func Test_osPath_Join(t *testing.T) {
+func Test_filePath_Join(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		res := new(osPath).Join("a", "b")
+		res := new(filePath).Join("a", "b")
 		assert.Equal(
 			t,
 			res,
-			filepath.Join("a", "b"),
+			fp.Join("a", "b"),
 		)
 	})
 
 	t.Run("HasParent", func(t *testing.T) {
-		res := new(osPath).Join("a", "b", "..", "c")
+		res := new(filePath).Join("a", "b", "..", "c")
 		assert.Equal(
 			t,
 			res,
-			filepath.Join("a", "c"),
+			fp.Join("a", "c"),
 		)
 	})
 
 	t.Run("/", func(t *testing.T) {
-		res := new(osPath).Join("a", "b/c/d")
+		res := new(filePath).Join("a", "b/c/d")
 		assert.Equal(
 			t,
 			res,
-			filepath.Join("a", "b", "c", "d"),
+			fp.Join("a", "b", "c", "d"),
 		)
 	})
 }

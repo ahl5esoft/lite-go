@@ -1,4 +1,4 @@
-package ossvc
+package gosvc
 
 import (
 	"os"
@@ -16,7 +16,7 @@ func Test_file_Read(t *testing.T) {
 		defer ctrl.Finish()
 
 		mockFileEntry := contract.NewMockIFileEntry(ctrl)
-		self := NewFile(mockFileEntry)
+		self := newFile(mockFileEntry)
 
 		wd, _ := os.Getwd()
 		filePath := filepath.Join(wd, "file-read")
@@ -46,7 +46,7 @@ func Test_file_Read(t *testing.T) {
 		defer ctrl.Finish()
 
 		mockFileEntry := contract.NewMockIFileEntry(ctrl)
-		self := NewFile(mockFileEntry)
+		self := newFile(mockFileEntry)
 
 		wd, _ := os.Getwd()
 		filePath := filepath.Join(wd, "file-read")

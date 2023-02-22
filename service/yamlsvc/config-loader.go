@@ -6,7 +6,6 @@ import (
 	"sync"
 
 	"github.com/ahl5esoft/lite-go/contract"
-
 	jsoniter "github.com/json-iterator/go"
 	"gopkg.in/yaml.v3"
 )
@@ -46,10 +45,11 @@ func (m *configLoader) Load(v interface{}) (err error) {
 	return
 }
 
-// 创建配置加载器
-func NewConfigLoader(osPath contract.IOsPath, yamlName string) contract.IConfigLoader {
-	wd, _ := os.Getwd()
+func NewConfigLoader(filePath contract.IFilePath, filename string) contract.IConfigLoader {
 	return &configLoader{
-		filePath: osPath.Join(wd, yamlName),
+		filePath: filePath.Join(
+			filePath.Getwd(),
+			filename,
+		),
 	}
 }

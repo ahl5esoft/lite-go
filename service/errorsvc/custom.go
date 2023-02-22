@@ -5,6 +5,7 @@ import (
 
 	"github.com/ahl5esoft/lite-go/contract"
 	errorcode "github.com/ahl5esoft/lite-go/model/enum/error-code"
+	jsoniter "github.com/json-iterator/go"
 )
 
 type custom struct {
@@ -15,7 +16,11 @@ type custom struct {
 }
 
 func (m custom) Error() string {
-	return fmt.Sprintf("[err: %v, code: %v, data: %v]", m.error, m.code, m.data)
+	s, _ := jsoniter.MarshalToString(map[string]any{
+		"data": m.data,
+		"err":  m.code,
+	})
+	return s
 }
 
 func (m custom) GetCode() errorcode.Value {
